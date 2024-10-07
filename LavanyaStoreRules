@@ -1,0 +1,26 @@
+LavanyaStore Apps
+
+** FEATURES
+	1. Home Page
+	2. Register. Login, Profile User
+	3. Product Page
+	4. Single product page
+	5. Shopping cart
+	6. Checkout
+		- Shopping Calculation
+		- Payment Gateway
+	7. Order history
+	8. Admin Panel 
+		- Dashboard
+		- Manage Products
+		- Manage Orders 
+		- Reports
+		- Configuration
+		
+
+** TECHNOLOGY STACK
+	1. GOLANG
+		- GORILLA MUX
+		- GORM
+	2. PostgreSQL
+	3. Bootstrap
