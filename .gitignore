@@ -1,0 +1,18 @@
+#Binaries
+
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Output directories
+/bin/
+/out/
+/dist/
+/build/
+
+#logs
+*.log
+
+#dependencies
+/vendor/
