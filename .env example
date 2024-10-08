@@ -1,3 +1,9 @@
 APP_NAME = Lavanya Store
 APP_ENV = development
 APP_PORT = 9000
+
+DB_HOST = localhost
+DB_USER = kimbozy
+DB_PASSWORD = password 
+DB_NAME = lavanya_store
+DB_PORT = 5432
