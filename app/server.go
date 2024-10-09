@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/fakh1m/LavanyaStore/database/seeders"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -34,7 +35,14 @@ type DBConfig struct {
 func (server *Server) Initialize(appConfig AppConfig, dbConfig DBConfig) {
 	fmt.Println("Welcome to " + appConfig.AppName)
 
+	server.initializeDB(dbConfig)
+	server.initializeRoutes()
+	seeders.DBSeed(server.DB)
+}
+
+func (server *Server) initializeDB(dbConfig DBConfig) {
 	var err error
+
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", dbConfig.DBHost, dbConfig.DBUser, dbConfig.DBPassword, dbConfig.DBName, dbConfig.DBPort)
 	server.DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
@@ -42,8 +50,14 @@ func (server *Server) Initialize(appConfig AppConfig, dbConfig DBConfig) {
 		panic("failed to connect to database")
 	}
 
-	server.Router = mux.NewRouter()
-	server.initializeRoutes()
+	for _, model := range RegisterModels() {
+		err = server.DB.AutoMigrate(model.Model)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	fmt.Println("Database migrate successfully...")
 }
 
 func getEnv(key, fallback string) string {
