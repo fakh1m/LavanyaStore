@@ -68,19 +68,19 @@ func (server *Server) initCommands(config AppConfig, dbConfig DBConfig) {
 	cmdApp := cli.NewApp()
 	cmdApp.Commands = []cli.Command{
 		{
-			Name: "db:migrate",
+			Name:  "db:migrate",
 			Usage: "menjalankan dbMigrate",
-			Action: func (c *cli.Context) error {
+			Action: func(c *cli.Context) error {
 				server.dbMigrate()
 				return nil
 			},
 		},
 		{
-			Name: "db:seed",
+			Name:  "db:seed",
 			Usage: "menjalankan seeder",
-			Action: func (c *cli.Context) error {
+			Action: func(c *cli.Context) error {
 				err := seeders.DBSeed(server.DB)
-				if err != nil{
+				if err != nil {
 					log.Fatal(err)
 				}
 				return nil
@@ -88,7 +88,7 @@ func (server *Server) initCommands(config AppConfig, dbConfig DBConfig) {
 		},
 	}
 	err := cmdApp.Run(os.Args)
-	if err!= nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 }
