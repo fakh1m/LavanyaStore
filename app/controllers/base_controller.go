@@ -25,7 +25,7 @@ type AppConfig struct {
 	AppName string
 	AppEnv  string
 	AppPort string
-	AppUrl  string
+	AppURL  string
 }
 
 type DBConfig struct {
@@ -82,7 +82,7 @@ func (server *Server) initializeDB(dbConfig DBConfig) {
 	}
 }
 
-func (server *Server) initializeAppConfig (appConfig AppConfig){
+func (server *Server) initializeAppConfig(appConfig AppConfig) {
 	server.AppConfig = &appConfig
 }
 
@@ -137,7 +137,7 @@ func GetPaginationLinks(config *AppConfig, params PaginationParams) (PaginationL
 	for i := 1; int32(i) <= totalPages; i++ {
 		links = append(links, PageLink{
 			Page:          int64(i),
-			Url:           fmt.Sprintf("%s/%s/?=page=%s", config.AppUrl, params.Path, fmt.Sprint(i)),
+			Url:           fmt.Sprintf("%s/%s?page=%s", config.AppURL, params.Path, fmt.Sprint(i)),
 			IsCurrentPage: int32(i) == params.CurrentPage,
 		})
 	}
@@ -154,9 +154,9 @@ func GetPaginationLinks(config *AppConfig, params PaginationParams) (PaginationL
 	}
 
 	return PaginationLink{
-		CurrentPage: fmt.Sprintf("%s/%s/?=page=%s", config.AppUrl, params.Path, fmt.Sprint(params.CurrentPage)),
-		NextPage:    fmt.Sprintf("%s/%s/?=page=%s", config.AppUrl, params.Path, fmt.Sprint(nextPage)),
-		PrevPage:    fmt.Sprintf("%s/%s/?=page=%s", config.AppUrl, params.Path, fmt.Sprint(prevPage)),
+		CurrentPage: fmt.Sprintf("%s/%s?page=%s", config.AppURL, params.Path, fmt.Sprint(params.CurrentPage)),
+		NextPage:    fmt.Sprintf("%s/%s?page=%s", config.AppURL, params.Path, fmt.Sprint(nextPage)),
+		PrevPage:    fmt.Sprintf("%s/%s?page=%s", config.AppURL, params.Path, fmt.Sprint(prevPage)),
 		TotalRows:   params.TotalRows,
 		TotalPage:   totalPages,
 		Links:       links,

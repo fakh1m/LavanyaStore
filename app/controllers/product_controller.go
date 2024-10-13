@@ -21,7 +21,7 @@ func (server *Server) Products(w http.ResponseWriter, r *http.Request) {
 		page = 1
 	}
 
-	perPage := 9
+	perPage := 2
 
 	productModel := models.Product{}
 	products, totalRows, err := productModel.GetProducts(server.DB, perPage, page)
