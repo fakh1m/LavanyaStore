@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/fakh1m/LavanyaStore/app/models"
+	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
 )
 
@@ -46,4 +47,25 @@ func (server *Server) Products(w http.ResponseWriter, r *http.Request) {
 		"products":   products,
 		"pagination": pagination,
 	})
+}
+
+func (server *Server) GetProductBySlug(w http.ResponseWriter, r *http.Request) {
+	render := render.New(render.Options{
+		Layout: "layout",
+	})
+	vars := mux.Vars(r)
+
+	if vars["slug"] == "" {
+		return
+	}
+
+	productModel := models.Product{}
+	product, err := productModel.FindBySlug(server.DB, vars["slug"])
+	if err != nil {
+		return
+	}
+	_ = render.HTML(w, http.StatusOK, "product", map[string]interface{}{
+		"product": product,
+	})
+
 }
